@@ -1,0 +1,223 @@
+{
+    "id": 1,
+    "title": "SBMS",
+    "description": "SpringBoot Microservices",
+    "content": "SpringBooot"
+}
+
+{
+    "id": 2,
+    "title": "Hibernate",
+    "description": "SpringBoot Hibernate",
+    "content": "SpringBooot"
+}
+
+{
+    "id": 3,
+    "title": "SpringDataJPA",
+    "description": "SpringBoot Hibernate",
+    "content": "SpringBooot"
+}
+
+{
+    "id": 4,
+    "title": "SpringCore",
+    "description": "SpringBoot ",
+    "content": "SpringCore"
+}
+
+{
+    "id": 5,
+    "title": "Core Java",
+    "description": "Java ",
+    "content": "Core Java"
+}
+
+{
+    "id": 6,
+    "title": "Advanced Java",
+    "description": "Java ",
+    "content": "Advanced Java"
+}
+
+
+{
+    "id": 7,
+    "title": "JDBC",
+    "description": "Core Java ",
+    "content": "Advanced Java"
+}
+
+{
+    "id": 8,
+    "title": "Git",
+    "description": "Git for Beginners ",
+    "content": "Mastering Git"
+}
+{
+    "id": 9,
+    "title": "Eclipse",
+    "description": "Eclipse for Beginners ",
+    "content": "Mastering Eclipse"
+}
+{
+    "id": 10,
+    "title": "BitBucket",
+    "description": "BitBucket for Beginners ",
+    "content": "Mastering BitBucket"
+}
+
+============================================================================
+
+@PostConstruct
+	public void init() {
+		Post p1 = new Post();
+		p1.setId(1L);
+		p1.setTitle("SBMS");
+		p1.setDescription("SpringBoot Microservices");
+		p1.setContent("SpringBooot");
+
+		Post p2 = new Post();
+		p2.setId(2L);
+		p2.setTitle("Hibernate");
+		p2.setDescription("SSpringBoot Hibernate");
+		p2.setContent("SpringBooot");
+
+		Post p3 = new Post();
+		p3.setId(3L);
+		p3.setTitle("SpringDataJPA");
+		p3.setDescription("SpringBoot Hibernate");
+		p3.setContent("SpringBooot");
+
+		Post p4 = new Post();
+		p4.setId(4L);
+		p4.setTitle("SpringCore");
+		p4.setDescription("SpringBoot ");
+		p4.setContent("SpringCore");
+
+		Post p5 = new Post();
+		p5.setId(5L);
+		p5.setTitle("Core Java");
+		p5.setDescription("Java ");
+		p5.setContent("Core Java");
+
+		Post p6 = new Post();
+		p6.setId(6L);
+		p6.setTitle("Advanced Java");
+		p6.setDescription("Java ");
+		p6.setContent("Advanced Java");
+
+		Post p7 = new Post();
+		p7.setId(7L);
+		p7.setTitle("JDBC");
+		p7.setDescription("Core Java ");
+		p7.setContent("Advanced Java");
+
+		Post p8 = new Post();
+		p8.setId(8L);
+		p8.setTitle("Git");
+		p8.setDescription("Git for Beginners ");
+		p8.setContent("Mastering Git");
+
+		Post p9 = new Post();
+		p9.setId(9L);
+		p9.setTitle("Eclipse");
+		p9.setDescription("Eclipse for Beginners ");
+		p9.setContent("Mastering Eclipse");
+
+		Post p10 = new Post();
+		p10.setId(10L);
+		p10.setTitle("BitBucket");
+		p10.setDescription("BitBucket for Beginners ");
+		p10.setContent("Mastering BitBucket");
+
+		List<Post> posts = List.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
+
+		repository.saveAll(posts);
+	}
+
+
+
+
+
+
+
+
+============================================================================
+
+	@Override
+	public List<PostDto> saveAllPosts(List<PostDto> dtos) {
+		List<Post> allposts = convertListDtoToEntity(dtos);
+		List<Post> saveAll = repository.saveAll(allposts);
+		List<PostDto> dtoslist = convertListEntityTODto(saveAll);
+		return dtoslist;
+	} 
+	
+	
+	
+		List<PostDto> saveAllPosts(List<PostDto> dtos);
+		
+		
+		
+	private List<Post> convertListDtoToEntity(List<PostDto> dtos) {
+
+		Post p1 = convertDtoToEntity(dtos.get(0));
+		Post p2 = convertDtoToEntity(dtos.get(1));
+		Post p3 = convertDtoToEntity(dtos.get(2));
+
+		return List.of(p1, p2, p3);
+	}
+
+	private List<PostDto> convertListEntityTODto(List<Post> dtos) {
+
+		PostDto p1 = convertEntityToDto(dtos.get(0));
+		PostDto p2 = convertEntityToDto(dtos.get(1));
+		PostDto p3 = convertEntityToDto(dtos.get(2));
+
+		return List.of(p1, p2, p3);
+	}
+		
+
+	@PostMapping("all")
+	public List<PostDto> saveAll(@RequestBody List<PostDto> dto) {
+
+		return service.saveAllPosts(dto);
+	}
+	
+	
+	
+	@Override
+	public List<PostDto> getAllPosts() {
+		List<Post> findAll = repository.findAll();
+		List<PostDto> dtolist = convertListEntityTODto(findAll);
+		return dtolist;
+	}
+
+
+
+
+
+============
+
+
+
+
+
+	private List<PostDto> convertListEntityTODto(List<Post> dtos) {
+
+		PostDto p1 = convertEntityToDto(dtos.get(0));
+		PostDto p2 = convertEntityToDto(dtos.get(1));
+		PostDto p3 = convertEntityToDto(dtos.get(2));
+		PostDto p4 = convertEntityToDto(dtos.get(3));
+		PostDto p5 = convertEntityToDto(dtos.get(4));
+		PostDto p6 = convertEntityToDto(dtos.get(5));
+		PostDto p7 = convertEntityToDto(dtos.get(6));
+		PostDto p8 = convertEntityToDto(dtos.get(7));
+		PostDto p9 = convertEntityToDto(dtos.get(8));
+		PostDto p10 = convertEntityToDto(dtos.get(9));
+
+		return List.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
+	}
+	
+	
+================================
