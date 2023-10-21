@@ -19,7 +19,7 @@ import jakarta.persistence.UniqueConstraint;
 public class Post {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column(name = "title", nullable = false)
@@ -31,7 +31,7 @@ public class Post {
 	@Column(name = "content", nullable = false)
 	private String content;
 	@Column(name = "comment_id", nullable = false)
-	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Comment> comment = new HashSet<>();
 
 	public Post() {

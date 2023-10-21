@@ -1,26 +1,25 @@
 package com.suresh.dto;
 
+import java.util.Set;
+
+import com.suresh.entity.Comment;
+
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class PostDto {
 	private long id;
-
-	// title should not be null or empty
-	// title should have at least 2 characters
+	// post title should not be null or empty
+	// post title should have at least 2 characters
 	@NotEmpty
-	@Size(min = 2, message = "Post title should have at least 2 characters")
+	@Size(min = 2, message = "Post title should have atleast 2 characters")
 	private String title;
-
-	// post description should be not null or empty
+	// post description should not be null or empty
 	// post description should have at least 10 characters
-	@NotEmpty
-	@Size(min = 10, message = "Post description should have at least 10 characters")
 	private String description;
-
-	// post content should not be null or empty
 	@NotEmpty
 	private String content;
+	private Set<Comment> comment;
 
 	public long getId() {
 		return id;
@@ -52,6 +51,14 @@ public class PostDto {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Set<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(Set<Comment> comment) {
+		this.comment = comment;
 	}
 
 }

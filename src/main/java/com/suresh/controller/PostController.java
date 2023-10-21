@@ -17,6 +17,8 @@ import com.suresh.response.PostResponse;
 import com.suresh.service.PostService;
 import com.suresh.utils.AppConstants;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/posts")
 public class PostController {
@@ -29,7 +31,7 @@ public class PostController {
 	}
 
 	@PostMapping
-	public ResponseEntity<PostDto> createPost(@RequestBody PostDto dto) {
+	public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto dto) {
 		PostDto createPost = service.createPost(dto);
 		return new ResponseEntity<>(createPost, HttpStatus.CREATED);
 	}
@@ -53,7 +55,7 @@ public class PostController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<PostDto> updatePost(@RequestBody PostDto dto, @PathVariable("id") Long id) {
+	public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto dto, @PathVariable("id") Long id) {
 		PostDto updatePost = service.updatePost(dto, id);
 
 		return new ResponseEntity<>(updatePost, HttpStatus.OK);

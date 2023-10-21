@@ -1,6 +1,9 @@
 package com.suresh.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,14 +17,15 @@ import jakarta.persistence.UniqueConstraint;
 public class Comment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
 	private String email;
 	private String body;
 
 	@JoinColumn(name = "POST_ID")
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Post post;
 
 	public Comment() {

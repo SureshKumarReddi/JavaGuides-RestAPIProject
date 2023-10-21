@@ -1,21 +1,28 @@
 package com.suresh;
 
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
-import com.suresh.entity.Comment;
 import com.suresh.entity.Post;
-import com.suresh.repository.CommentRepository;
+import com.suresh.repository.PostRepository;
 
 import jakarta.annotation.PostConstruct;
 
 @SpringBootApplication
 public class SpringBootRestApiBlogApplication {
+
 	@Autowired
-	CommentRepository repository;
-	// @Autowired
-	// PostRepository prepositPostRepository;
+	private PostRepository repository;
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootRestApiBlogApplication.class, args);
@@ -24,50 +31,67 @@ public class SpringBootRestApiBlogApplication {
 	@PostConstruct
 	public void init() {
 		Post p1 = new Post();
+		p1.setId(1L);
 		p1.setTitle("SBMS");
 		p1.setDescription("SpringBoot Microservices");
 		p1.setContent("SpringBooot");
 
 		Post p2 = new Post();
+		p2.setId(2L);
 		p2.setTitle("Hibernate");
 		p2.setDescription("SSpringBoot Hibernate");
 		p2.setContent("SpringBooot");
 
-		Comment c1 = new Comment();
+		Post p3 = new Post();
+		p3.setId(3L);
+		p3.setTitle("SpringDataJPA");
+		p3.setDescription("SpringBoot Hibernate");
+		p3.setContent("SpringBooot");
 
-		c1.setName("suresh");
-		c1.setEmail("suresh.y@hcl.com");
-		c1.setBody("This course is awesome...");
-		c1.setPost(p1);
+		Post p4 = new Post();
+		p4.setId(4L);
+		p4.setTitle("SpringCore");
+		p4.setDescription("SpringBoot ");
+		p4.setContent("SpringCore");
 
-		Comment c2 = new Comment();
+		Post p5 = new Post();
+		p5.setId(5L);
+		p5.setTitle("Core Java");
+		p5.setDescription("Java ");
+		p5.setContent("Core Java");
 
-		c2.setName("naresh");
-		c2.setEmail("naresh.y@hcl.com");
-		c2.setBody("This course is Great...");
-		c2.setPost(p1);
+		Post p6 = new Post();
+		p6.setId(6L);
+		p6.setTitle("Advanced Java");
+		p6.setDescription("Java ");
+		p6.setContent("Advanced Java");
 
-		Comment c3 = new Comment();
+		Post p7 = new Post();
+		p7.setId(7L);
+		p7.setTitle("JDBC");
+		p7.setDescription("Core Java ");
+		p7.setContent("Advanced Java");
 
-		c3.setName("suresh");
-		c3.setEmail("h.y@hcl.com");
-		c3.setBody("This course is awesome...");
-		c3.setPost(p2);
+		Post p8 = new Post();
+		p8.setId(8L);
+		p8.setTitle("Git");
+		p8.setDescription("Git for Beginners ");
+		p8.setContent("Mastering Git");
 
-		Comment c4 = new Comment();
+		Post p9 = new Post();
+		p9.setId(9L);
+		p9.setTitle("Eclipse");
+		p9.setDescription("Eclipse for Beginners ");
+		p9.setContent("Mastering Eclipse");
 
-		c4.setName("naresh");
-		c4.setEmail("d.y@hcl.com");
-		c4.setBody("This course is Great...");
-		c4.setPost(p2);
+		Post p10 = new Post();
+		p10.setId(10L);
+		p10.setTitle("BitBucket");
+		p10.setDescription("BitBucket for Beginners ");
+		p10.setContent("Mastering BitBucket");
 
-		// prepositPostRepository.save(p1); without this it is giving errors
-		// prepositPostRepository.save(p2);
+		List<Post> posts = List.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
 
-		repository.save(c1);
-		repository.save(c2);
-		repository.save(c3);
-		repository.save(c4);
+		repository.saveAll(posts);
 	}
-
 }

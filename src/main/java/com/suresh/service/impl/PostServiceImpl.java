@@ -1,9 +1,9 @@
 package com.suresh.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +21,11 @@ import com.suresh.service.PostService;
 public class PostServiceImpl implements PostService {
 
 	private PostRepository repository;
+	private ModelMapper modelMapper;
 
-	public PostServiceImpl(PostRepository repository) {
+	public PostServiceImpl(PostRepository repository, ModelMapper modelMapper) {
 		this.repository = repository;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
@@ -32,17 +34,6 @@ public class PostServiceImpl implements PostService {
 		Post save = repository.save(post);
 		PostDto dto = convertEntityToDto(save);
 		return dto;
-	}
-
-	private Post convertDtoToEntity(PostDto postdto) {
-
-		Post post = new Post();
-		post.setId(postdto.getId());
-		post.setTitle(postdto.getTitle());
-		post.setDescription(postdto.getDescription());
-		post.setContent(postdto.getContent());
-
-		return post;
 	}
 
 	@Override
@@ -68,11 +59,9 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostDto getPostById(Long id) {
-		Optional<Post> findById = repository.findById(id);
+		Post post = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
-		PostDto dto = convertEntityToDto(findById.get());
-
-		return dto;
+		return convertEntityToDto(post);
 	}
 
 	@Override
@@ -101,14 +90,32 @@ public class PostServiceImpl implements PostService {
 
 	}
 
+	private Post convertDtoToEntity(PostDto postdto) {
+		Post post = modelMapper.map(postdto, Post.class);
+		return post;
+
+		/*
+		 * Post post = new Post(); post.setId(postdto.getId());
+		 * post.setTitle(postdto.getTitle());
+		 * post.setDescription(postdto.getDescription());
+		 * post.setContent(postdto.getContent());
+		 * 
+		 * return post;
+		 */
+	}
+
 	private PostDto convertEntityToDto(Post save) {
 
-		PostDto dto = new PostDto();
-		dto.setId(save.getId());
-		dto.setTitle(save.getTitle());
-		dto.setDescription(save.getDescription());
-		dto.setContent(save.getContent());
-		return dto;
+		PostDto postDto = modelMapper.map(save, PostDto.class);
+		return postDto;
+
+		/*
+		 * PostDto dto = new PostDto(); dto.setId(save.getId());
+		 * dto.setTitle(save.getTitle()); dto.setDescription(save.getDescription());
+		 * dto.setContent(save.getContent()); dto.setComment(save.getComment()); return
+		 * dto;
+		 */
+
 	}
 
 }
