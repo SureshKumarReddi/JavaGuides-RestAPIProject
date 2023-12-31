@@ -2,6 +2,7 @@ package com.suresh.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class PostController {
 
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto dto) {
 		PostDto createPost = service.createPost(dto);
@@ -54,6 +56,7 @@ public class PostController {
 
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto dto, @PathVariable("id") Long id) {
 		PostDto updatePost = service.updatePost(dto, id);
@@ -62,6 +65,7 @@ public class PostController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<String> deletePost(@PathVariable long id) {
 		service.deletepostById(id);
 		return new ResponseEntity<>("post entity deleted successfully..", HttpStatus.OK);

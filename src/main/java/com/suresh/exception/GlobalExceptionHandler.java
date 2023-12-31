@@ -1,5 +1,6 @@
 package com.suresh.exception;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,5 +63,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		});
 
 		return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<ErrorDetails> handleAccessDeniedException(AccessDeniedException exception,
+			WebRequest webRequest) {
+		ErrorDetails errors = new ErrorDetails(new Date(), exception.getMessage(), webRequest.getDescription(false));
+
+		return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
 	}
 }
